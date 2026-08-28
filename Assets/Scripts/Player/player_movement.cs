@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class player_movement : MonoBehaviour
@@ -10,7 +9,7 @@ public class player_movement : MonoBehaviour
     //player variables
     [SerializeField] private Rigidbody rb;
 
-    [SerializeField] private float moveSpeed = 5f, jumpForce = 2f;
+    [SerializeField] private float moveSpeed = 5f, jumpForce = 2f, rotationSpeed = 10f;
 
     [SerializeField] private LayerMask groundLayer = 2;
 
@@ -44,6 +43,13 @@ public class player_movement : MonoBehaviour
     private void Update()
     {
         inputVector = input_actions.Player.Move.ReadValue<Vector2>();
+
+        RotatePlayerBody();
+    
+        if(transform.position.y <= -10f)
+        {
+            transform.position = new Vector3(0, 1.5f, 0);
+        }
     }
 
     private void FixedUpdate()
@@ -63,6 +69,15 @@ public class player_movement : MonoBehaviour
         Vector3 movementVector = inputVector * moveSpeed;
 
         rb.velocity = new Vector3(movementVector.x, rb.velocity.y, movementVector.y);
+    }
+
+    private void RotatePlayerBody()
+    {
+        Vector3 directionVector = new Vector3(inputVector.x, 0, inputVector.y);
+
+        Quaternion targetRotation = Quaternion.LookRotation(directionVector);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
 
     private void Jump()
