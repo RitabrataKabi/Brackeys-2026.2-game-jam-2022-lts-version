@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - stage2
+  - stage3
+  - checkpoint
   layers:
   - Default
   - TransparentFX

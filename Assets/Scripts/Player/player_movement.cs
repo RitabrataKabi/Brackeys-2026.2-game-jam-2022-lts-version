@@ -13,6 +13,8 @@ public class player_movement : MonoBehaviour
 
     [SerializeField] private LayerMask groundLayer = 2;
 
+    public int inputInverterMultiplier = 1;
+
 
     //private
     private Vector2 inputVector;
@@ -42,13 +44,13 @@ public class player_movement : MonoBehaviour
 
     private void Update()
     {
-        inputVector = input_actions.Player.Move.ReadValue<Vector2>();
+        inputVector = input_actions.Player.Move.ReadValue<Vector2>() * inputInverterMultiplier;
 
         RotatePlayerBody();
-    
-        if(transform.position.y <= -10f)
+
+        if (transform.position.y <= -10f)
         {
-            transform.position = new Vector3(0, 1.5f, 0);
+            checkpointManager.instance.RespawnPlayer(transform);
         }
     }
 
@@ -83,8 +85,18 @@ public class player_movement : MonoBehaviour
     private void Jump()
     {
         if (!groundCheck()) return;
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        // rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("not implemented, need the player to respawn, waiting to make the checkpoint system");
+
+            //actual code goes here
+            checkpointManager.instance.RespawnPlayer(transform);
+        }
+    }
 
 }
