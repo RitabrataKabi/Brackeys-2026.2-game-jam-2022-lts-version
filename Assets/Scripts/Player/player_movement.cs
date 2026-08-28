@@ -9,7 +9,7 @@ public class player_movement : MonoBehaviour
     //player variables
     [SerializeField] private Rigidbody rb;
 
-    [SerializeField] private float moveSpeed = 5f, jumpForce = 2f, rotationSpeed = 10f;
+    [SerializeField] private float moveSpeed = 5f, rotationSpeed = 10f; //jumpForce = 2f
 
     [SerializeField] private LayerMask groundLayer = 2;
 
