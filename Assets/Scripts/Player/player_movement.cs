@@ -50,6 +50,7 @@ public class player_movement : MonoBehaviour
 
         if (transform.position.y <= -10f)
         {
+            soundManager.instance.PlaySound("enemy");
             checkpointManager.instance.RespawnPlayer(transform);
         }
     }
@@ -92,8 +93,8 @@ public class player_movement : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("not implemented, need the player to respawn, waiting to make the checkpoint system");
-
+            // Debug.Log("not implemented, need the player to respawn, waiting to make the checkpoint system");
+            soundManager.instance.PlaySound("enemy");
             //actual code goes here
             checkpointManager.instance.RespawnPlayer(transform);
         }

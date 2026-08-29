@@ -8,6 +8,7 @@ TagManager:
   - stage2
   - stage3
   - checkpoint
+  - stop_enemy
   layers:
   - Default
   - TransparentFX

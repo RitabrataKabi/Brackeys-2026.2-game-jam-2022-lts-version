@@ -16,6 +16,10 @@ public class stage_control : MonoBehaviour
 
     private player_movement playerMovement;
 
+    [SerializeField] private enemy_player_look_follow enemy_Player_Look_Follow;
+
+    [SerializeField] private GameObject endScreenCanvas;
+
     void Start()
     {
         playerMovement = GetComponent<player_movement>();
@@ -31,6 +35,17 @@ public class stage_control : MonoBehaviour
         {
             OnStageChange("stage3");
         }
+        else if (other.CompareTag("stop_enemy"))
+        {
+            enemy_Player_Look_Follow.StopAllCoroutines();
+        }
+        else if (other.CompareTag("Finish"))
+        {
+            Debug.Log("game is won, finished");
+            if (endScreenCanvas != null)
+                endScreenCanvas.SetActive(true);
+            Application.Quit();
+        }
     }
 
     public void OnStageChange(string stageTag)
@@ -45,6 +60,8 @@ public class stage_control : MonoBehaviour
         else if (stageTag == "stage3")
         {
             Debug.Log("entering stage 3");
+            //initiate the enemy follow script
+            enemy_Player_Look_Follow.InitiateCoroutine();
         }
     }
 }
